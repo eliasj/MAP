@@ -1,0 +1,11 @@
+language: python
+
+install:
+    - pip install pybluez
+    - pip install PyOBEX 
+
+script: nosetests
+
+notification:
+    email:
+        - eliasj@student.chalmers.se

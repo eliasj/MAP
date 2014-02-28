@@ -1,4 +1,8 @@
 MAP
 ===
+Message Access Profile for Bluetooth implemented in Python.
 
-Message Access Profile for Python
+UNDER DEVELOPMENT
+=================
+THIS PACKGAE ARE NOT TESTED ON REAL DEVICES
+-------------------------------------------
