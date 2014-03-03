@@ -6,6 +6,7 @@ before_install:
 
 install:
     - pip install pybluez
+    - pip install PyOBEX
     - hg clone https://bitbucket.org/dboddie/pyobex
     - python pyobex/setup.py install
 
