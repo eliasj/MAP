@@ -2,11 +2,12 @@ language: python
 
 before_install:
     - sudo apt-get update -qq
-    - sudo apt-get install -qq libopenobex1-dev
+    - sudo apt-get install -qq libbluetooth3
 
 install:
     - pip install pybluez
-    - pip install PyOBEX 
+    - hg clone ssh://hg@bitbucket.org/dboddie/pyobex
+    - python pyobex/setup.py install
 
 script: nosetests
 
