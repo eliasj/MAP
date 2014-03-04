@@ -1,16 +1,17 @@
 #!/usr/bin/env python
 
 import bluetooth
-from PyOBEX import server, headers, responses, requests
+from PyOBEX import server, headers, responses
 
 MNS_CLASS = "1133"
 MNS_PROFILE = (MNS_CLASS, 0x0100)
 
+
 class Server(server.Server):
-    _p = None
-    def start_service(self, port = None):
+    #_p = None
+    def start_service(self, port=None):
         if port is None:
-            port = bluetooth.get_availiable_port(blutooth.RFCOMM)
+            port = bluetooth.get_availiable_port(bluetooth.RFCOMM)
 
         name = "MNS"
         uuid = "BB582B41-420C-11DB-B0DE-0800200C9A66"
