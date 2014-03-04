@@ -1,7 +1,7 @@
 #! /usr/bin/env python
 
 import unittest
-from mock import Mock
+from mock import Mock, _Call
 
 import PyOBEX
 import bluetooth
@@ -27,6 +27,8 @@ class MNS_server_test(unittest.TestCase):
         connect.read_data(data)
         self._mns.connect(self._socket, connect)
         self.assertIs(connect, self._mns.remote_info)
+        expected = _Call(((), (b'\xa0\x00\x07\x10\x00\x20\x00',),{}))
+        self.assertEqual(expected, self._socket.sendall.call_args)
 
     def test_disconnect(self):
         self._mns.connected = True
@@ -35,9 +37,19 @@ class MNS_server_test(unittest.TestCase):
         print self._socket.mock_calls
         self.assertFalse(self._mns.connected)
         self.assertTrue(self._socket.sendall.called)
+        expected = _Call(((), (b'\xa0\x00\x03',),{}))
+        self.assertEqual(expected, self._socket.sendall.call_args)
 
     def test_send_event(self):
         send_event = PyOBEX.requests.Put()
         send_event.add_header(PyOBEX.headers.Type("x-bt/MAP-event-report"), 50)
         self._mns.put(self._socket, send_event)
-        self.assertTrue(self._socket.sendall.called)
+        expected = _Call(((), (b'\xa0\x00\x03',),{}))
+        self.assertEqual(expected, self._socket.sendall.call_args)
+
+    def test_send_event_wrong_type(self):
+        send_event = PyOBEX.requests.Put()
+        send_event.add_header(PyOBEX.headers.Type("x-bt/wrong-type"), 50)
+        self._mns.put(self._socket, send_event)
+        expected = _Call(((), (b'\xc3\x00\x03',),{}))
+        self.assertEqual(expected, self._socket.sendall.call_args)

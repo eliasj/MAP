@@ -28,7 +28,6 @@ class Client(client.Client):
 
         if isinstance(response, responses.FailureResponse):
             raise Exception()
-        print response
         header, data = response
         return data
 
@@ -39,7 +38,6 @@ class Client(client.Client):
 
         if isinstance(response, responses.FailureResponse):
             raise Exception()
-        print response
         header, data = response
         return data
         pass

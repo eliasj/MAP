@@ -65,12 +65,9 @@ class MAS_client_test(unittest.TestCase):
     def test_get_message_listing(self):
         self.connect()
         data = "\xA0\x00\x13\xcb\x00\x00\x00\x01\x49\x00\x0b\x00\x6d\x00\x73\x00\x67\x00\x00"
-        message_list = "\x01\x02\x03"
+        message_list = "\x00\x6d\x00\x73\x00\x67\x00\x00"
         response = PyOBEX.responses.Success()
         response.read_data(data)
-        #response.add_header(self._connection_id, 8)
-        #response.add_header(PyOBEX.headers.End_Of_Body(message_list, True), len(message_list)**33 + 3)
-        print response.header_data
         PyOBEX.client.Client._send_headers = Mock(
             return_value = response)
         self.assertEqual(message_list, self._mas.get_message_listing())

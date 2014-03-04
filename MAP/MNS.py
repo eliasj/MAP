@@ -31,13 +31,13 @@ class Server(server.Server):
 
         for header in request.header_data:
             if isinstance(header, headers.Type):
-                request_type = header.decode()
+                request_type = header.decode()[3:]
             elif isinstance(header, headers.Body):
                 request_body.appand(header.decode())
             elif isinstance(header, header.End_Of_Body):
                 request_body.append(header.decode())
-
-        if request_type == "x-bt/MAP-event-report":
+        expected_type = "x-bt/MAP-event-report"
+        if request_type.startswith(expected_type):
             response = responses.Success()
             self.send_response(socket, response)
         else:
