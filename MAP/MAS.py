@@ -10,7 +10,7 @@ class Client(client.Client):
     def connect(self):
         response = client.Client.connect(
             self, header_list=[headers.Target(MAS_UUID)])
-        if response != responses.Success:
+        if response != responses.ConnectSuccess:
             raise Exception
 
     def set_notification_registration(self):
