@@ -10,7 +10,7 @@ class Client(client.Client):
     def connect(self):
         response = client.Client.connect(
             self, header_list=[headers.Target(MAS_UUID)])
-        if response != responses.ConnectSuccess:
+        if not isinstance(response, responses.ConnectSuccess):
             raise Exception
 
     def set_notification_registration(self):
@@ -18,13 +18,13 @@ class Client(client.Client):
             self.connection_id,
             headers.Type("x-bt/MAP-NotificationRegistration"),
             headers.App_Parameters(str(0x0e1))])
-        if response != responses.Success:
+        if not isinstance(response, responses.Success):
             raise Exception
 
     def set_folder(self, folder):
         response = self.setpath(name=folder, header_list=[
             self.connection_id])
-        if response != responses.Success:
+        if not isinstance(response, responses.Success):
             raise Exception
 
     def get_folder_listing(self):
@@ -64,7 +64,7 @@ class Client(client.Client):
             self.connection_id,
             headers.Type("x-bt/messageStatus"),
             headers.App_Parameters(app_param)])
-        if response != responses.Success:
+        if not isinstance(response, responses.Success):
             raise Exception
 
     def set_message_read_satus(self, message_id):
@@ -84,12 +84,12 @@ class Client(client.Client):
             self.connection_id,
             headers.Type("x-bt/message"),
             headers.App_Parameters("\x0A\x01")])
-        if response != responses.Success:
+        if not isinstance(response, responses.Success):
             raise Exception
 
     def update_inbox(self):
         response = self.put("", str(0x30), header_list=[
             self.connection_id,
             headers.Type("x-bt/MAP-messageUpdate")])
-        if response != responses.Success:
+        if not isinstance(response, responses.Success):
             raise Exception
