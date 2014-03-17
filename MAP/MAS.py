@@ -19,7 +19,7 @@ class Client(client.Client):
             headers.Type("x-bt/MAP-NotificationRegistration"),
             headers.App_Parameters(str(0x0e1))])
         if not isinstance(response, responses.Success):
-            raise Exception
+            raise Exception(response)
 
     def set_folder(self, folder):
         response = self.setpath(name=folder, header_list=[
