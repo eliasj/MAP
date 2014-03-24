@@ -50,6 +50,9 @@ class MAS_client_test(unittest.TestCase):
 
     def test_set_notifiaction_registration(self):
         self.connect()
+        response = PyOBEX.responses.Success()
+        PyOBEX.client.Client._send_headers = Mock(
+            return_value = response)
         self._mas.set_notification_registration()
 
     def test_get_folder_listing(self):
