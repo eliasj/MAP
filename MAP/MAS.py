@@ -38,10 +38,11 @@ class Client(client.Client):
         header, data = response
         return data
 
-    def get_message_listing(self): # FIXME need applications-parameters 
+    def get_message_listing(self):
         response = self.get(header_list=[
             self.connection_id,
-            headers.Type("x-bt/MAP-msg-listing")])
+            headers.Type("x-bt/MAP-msg-listing"),
+            headers.App_Parameters(str(0x060))])
 
         if isinstance(response, responses.FailureResponse):
             raise Exception()
